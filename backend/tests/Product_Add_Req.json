@@ -1,0 +1,14 @@
+{    
+    "products": [
+        {
+            "name": "Coke",
+            "price": 3,
+            "category": "Drinks"
+        },
+        {
+            "name": "Water",
+            "price": 4,
+            "category": "Drinks"
+        }
+    ]
+}

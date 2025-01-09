@@ -1,0 +1,242 @@
+[
+    {
+        "name": "Sushi Roll (Maki) - 6 pieces",
+        "price": 10,
+        "category": "Sushi"
+    },
+    {
+        "name": "Nigiri - 2 pieces",
+        "price": 12,
+        "category": "Sushi"
+    },
+    {
+        "name": "Sashimi - 6 pieces",
+        "price": 15,
+        "category": "Sushi"
+    },
+    {
+        "name": "Miso Soup pC",
+        "price": 5,
+        "category": "Soups"
+    },   
+    {
+        "name": "Gyoza pN",
+        "price": 8,
+        "category": "Appetizers"
+    },
+    {
+        "name": "Tempura sG",
+        "price": 10,
+        "category": "Appetizers"
+    },    
+    {
+        "name": "Katsu Curry",
+        "price": 15,
+        "category": "Main Dishes"
+    },
+    {
+        "name": "Donburi sP",
+        "price": 15,
+        "category": "Main Dishes"
+    },
+    {
+        "name": "Matcha Ice Cream sG",
+        "price": 7,
+        "category": "Desserts"
+    },
+    {
+        "name": "Mochi sG",
+        "price": 7,
+        "category": "Desserts"
+    },
+    {
+        "name": "Green Tea Ice Cream  sG",
+        "price": 7,
+        "category": "Desserts"
+    },
+    {
+        "name": "Sake",
+        "price": 10,
+        "category": "Drinks"
+    },
+    {
+        "name": "Sapporo Beer",
+        "price": 8,
+        "category": "Drinks"
+    },
+    {
+        "name": "Green Tea",
+        "price": 5,
+        "category": "Drinks"
+    },
+    {
+        "name": "Lemonade",
+        "price": 5,
+        "category": "Drinks"
+    },
+    {
+        "name": "Coke",
+        "price": 5,
+        "category": "Drinks"
+    },
+    {
+        "name": "Sprite",
+        "price": 5,
+        "category": "Drinks"
+    },
+    {
+        "name": "Water",
+        "price": 3,
+        "category": "Drinks"
+    },
+    {
+        "name": "Temaki - 1 piece",
+        "price": 12,
+        "category": "Sushi"
+    },
+    {
+        "name": "Uramaki - 6 pieces",
+        "price": 14,
+        "category": "Sushi"
+    },
+    {
+        "name": "Futomaki - 4 pieces",
+        "price": 13,
+        "category": "Sushi"
+    },
+    {
+        "name": "Hosomaki - 6 pieces",
+        "price": 11,
+        "category": "Sushi"
+    },
+    {
+        "name": "Gunkan - 2 pieces",
+        "price": 12,
+        "category": "Sushi"
+    },
+    {
+        "name": "Oshi - 6 pieces",
+        "price": 15,
+        "category": "Sushi"
+    },
+    {
+        "name": "Chirashizushi - 1 portion",
+        "price": 16,
+        "category": "Sushi"
+    },
+    {
+        "name": "Inarizushi - 2 pieces",
+        "price": 10,
+        "category": "Sushi"
+    },
+    {
+        "name": "California Roll Vegui/sG",
+        "price": 10,
+        "category": "Sushi"
+    },    
+    {
+        "name": "Cucumber Roll pN",
+        "price": 8,
+        "category": "Sushi"
+    },
+    {
+        "name": "Vegetarian Nigiri",
+        "price": 12,
+        "category": "Sushi"
+    },
+    {
+        "name": "Rainbow Roll sP",
+        "price": 15,
+        "category": "Sushi"
+    },    
+    {
+        "name": "Tempura de Vegetales sG",
+        "price": 10,
+        "category": "Appetizers"
+    },
+    {
+        "name": "Ensalada de Algas sP",
+        "price": 7,
+        "category": "Salads"
+    },
+    {
+        "name": "Ensalada de Aguacate y Mango Vegui/sG",
+        "price": 9,
+        "category": "Salads"
+    },   
+    {
+        "name": "Avocado Roll sG",
+        "price": 9,
+        "category": "Sushi"
+    },    
+    {
+        "name": "Quinoa Sushi Roll sG/Vegui",
+        "price": 11,
+        "category": "Sushi"
+    },
+    {
+        "name": "Edamame pN/sP",
+        "price": 6,
+        "category": "Appetizers"
+    },    
+    {
+        "name": "Ensalada de Pollo Teriyaki sP",
+        "price": 12,
+        "category": "Salads"
+    },    
+    {
+        "name": "Arroz Blanco pN",
+        "price": 3,
+        "category": "Side Dishes"
+    },
+    {
+        "name": "Pollo Teriyaki sP/pN",
+        "price": 12,
+        "category": "Main Dishes"
+    },
+    {
+        "name": "Salmón a la Parrilla SG/SP",
+        "price": 18,
+        "category": "Main Dishes"
+    },
+    {
+        "name": "Tofu Teriyaki Vegi",
+        "price": 15,
+        "category": "Main Dishes"
+    },
+    {
+        "name": "Mini Sushi Platter PN/SP)",
+        "price": 10,
+        "category": "Kids Menu"
+    },
+    {
+        "name": "Brochetas de Pollo Yakitori PN/SP",
+        "price": 8,
+        "category": "Kids Menu"
+    },
+    {
+        "name": "Helado de Mango (Sin Gluten, Para Niños)",
+        "price": 5,
+        "category": "Desserts"
+    },
+    {
+        "name": "Sushi Dulce (Vegetariano, Sin Gluten)",
+        "price": 7,
+        "category": "Desserts"
+    },
+    {
+        "name": "Sake Espumoso",
+        "price": 12,
+        "category": "Drinks"
+    },
+    {
+        "name": "Té Helado de Jazmín sG/sP",
+        "price": 5,
+        "category": "Drinks"
+    },
+    {
+        "name": "Batido de Frutas Tropicales pN",
+        "price": 6,
+        "category": "Drinks"
+    }
+]

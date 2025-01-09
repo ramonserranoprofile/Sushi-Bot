@@ -1,0 +1,13 @@
+{
+    "customerName": "Juan Pérez",
+    "products": [
+        {
+            "id": "677b6e9445b6ecb6b09450f1",
+            "quantity": "2"
+        },
+        {
+            "id": "677b6e9445b6ecb6b09450f2",
+            "quantity": "2"
+        }
+    ]
+}

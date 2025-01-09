@@ -1,0 +1,24 @@
+{
+    "_id": "677f24b8a982f9df52fe6871",
+    "customerName": "Juan Pérez",
+    "products": [
+        {
+            "product": "677b6e9445b6ecb6b09450f1",
+            "name": "Sushi Roll (Maki) - 6 pieces",
+            "price": 10,
+            "quantity": 2,
+            "_id": "677f25309364d38b47f778b1"
+        },
+        {
+            "product": "677b6e9445b6ecb6b09450f2",
+            "name": "Nigiri - 2 pieces",
+            "price": 12,
+            "quantity": 2,
+            "_id": "677f25309364d38b47f778b2"
+        }
+    ],
+    "total": 44,
+    "status": "pending",
+    "createdAt": "2025-01-09T01:22:00.112Z",
+    "__v": 0
+}

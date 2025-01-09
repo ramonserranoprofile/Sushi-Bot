@@ -1,0 +1,74 @@
+[
+    {
+        "question": "¿Están abiertos?",
+        "answer": "Nuestro horario de atención es de lunes a viernes de 12:00 PM a 10:00 PM, y los sábados de 1:00 PM a 11:00 PM, Domingos descansamos. La hora actual es ${hora_actual}. Estamos ${on_off}, ¡Esperamos tu visita!"
+    },
+    {
+        "question": "¿Cuál es su dirección?",
+        "answer": "Nos encontramos ubicados en la Avenida Principal, número 123, en el centro de la ciudad. ¡Te esperamos!"
+    },
+    {
+        "question": "¿A que hora cierran?",
+        "answer": "Hoy ${dia_semana} cerramos a las ${hora_cierre_hora}. ¡Esperamos tu visita!"
+    },   
+    {
+        "question": "¿Cuáles son los horarios del restaurante?",
+        "answer": "Abrimos de lunes a viernes de 12:00 PM a 10:00 PM, y los fines de semana: Sabados de 1:00 PM a 11:00 PM., Domingos descansamos. ¡Te esperamos!"
+    },
+    {
+        "question": "¿Tienen opciones vegetarianas?",
+        "answer": "¡Sí! Tenemos sushi vegetariano y platos como ensaladas, edamame y más."
+    },
+    {
+        "question": "¿Hacen entregas a domicilio?",
+        "answer": "Sí, ofrecemos servicio de entrega a domicilio. Puedes ordenar a través de nuestra página web o apps como Uber Eats y Glovo."
+    },
+    {
+        "question": "¿Aceptan tarjetas de crédito?",
+        "answer": "Sí, aceptamos tarjetas de crédito y débito como método de pago."
+    },
+    {
+        "question": "¿Tienen promociones o descuentos?",
+        "answer": "Ofrecemos descuentos en pedidos grandes y promociones especiales durante la semana. Consulta nuestra página web o redes sociales para más información."
+    },
+    {
+        "question": "¿Puedo hacer una reserva?",
+        "answer": "¡Claro! Puedes hacer una reserva llamándonos al número del restaurante o enviándonos un mensaje por WhatsApp."
+    },
+    {
+        "question": "¿Hay opciones sin gluten?",
+        "answer": "Sí, contamos con opciones sin gluten, como sushi con arroz especial y platos adaptados para celíacos."
+    },
+    {
+        "question": "¿Cuánto tarda un pedido para llevar?",
+        "answer": "El tiempo de preparación promedio es de 15 a 25 minutos, dependiendo del tamaño del pedido."
+    },
+    {
+        "question": "¿Tienen menú para niños?",
+        "answer": "Sí, ofrecemos un menú especial para niños con opciones suaves y sin picante."
+    },
+    {
+        "question": "¿Ofrecen catering para eventos?",
+        "answer": "¡Sí! Contamos con servicio de catering para eventos pequeños y grandes. Contáctanos para más información."
+    },
+    {
+        "question": "¿Es necesario reservar con anticipación?",
+        "answer": "Recomendamos reservar para grupos grandes o durante los fines de semana, pero no es obligatorio."
+    },
+    {
+        "question": "¿Tienen opciones de bebida?",
+        "answer": "Sí, ofrecemos bebidas como té verde, sake, refrescos, jugos y cócteles."
+    },
+    {
+        "question": "¿Dónde están ubicados?",
+        "answer": "Estamos en la Avenida Principal, número 123, en el centro de la ciudad."
+    },
+    {
+        "question": "¿Se permite fumar en el restaurante?",
+        "answer": "No se permite fumar dentro del restaurante, pero tenemos una terraza exterior donde está permitido."
+    },
+    {
+        "question": "¿Ofrecen sushi sin pescado crudo?",
+        "answer": "¡Sí! Tenemos opciones como sushi de pollo, camarones cocidos y vegetales."
+    }
+]
