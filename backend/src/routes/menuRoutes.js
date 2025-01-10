@@ -4,7 +4,7 @@ import { menuController } from '../controllers/menuController.js';
 
 const menuRouter = express.Router();
 menuRouter.get('/', menuController.getMenu);
-menuRouter.get('/category/:category', menuController.getMenuByCategory);
+menuRouter.get('/category/:category', menuController.getMenuProductByCategory);
 menuRouter.get('/:id', menuController.getMenuProductById);
 menuRouter.get('/name/:name', menuController.getMenuProductByName);
 menuRouter.post('/addProduct', menuController.addProduct);

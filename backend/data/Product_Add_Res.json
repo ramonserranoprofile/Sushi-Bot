@@ -1,0 +1,10 @@
+{
+    "message": "Producto created successfully",
+    "product": {
+        "name": "Coca light",
+        "price": 3,
+        "category": "Drinks",
+        "_id": "67812982b4095076171fdb1d",
+        "__v": 0
+    }
+}

@@ -2,10 +2,10 @@ import Product from '../models/Product.js';
 
 // Add new product to the menu
 const addProduct = async (req, res) => {
-    const { name, price, description } = req.body;
+    const { name, price, category } = req.body;
 
     try {
-        const newProduct = new Product({ name, price, description });
+        const newProduct = new Product({ name, price, category });
         await newProduct.save();
         res.status(201).json({ message: 'Producto created successfully', product: newProduct });
     } catch (error) {
@@ -29,7 +29,7 @@ const updateProduct = async (req, res) => {
     const { name, price, description } = req.body;
 
     try {
-        const updatedProduct = await Product.findByIdAndUpdate(id, { name, price, description }, { new: true });
+        const updatedProduct = await Product.findByIdAndUpdate(id, { name, price, category }, { new: true });
         res.status(200).json({ message: 'Product updated successfully', product: updatedProduct });
     } catch (error) {
         res.status(500).json({ message: 'Error to update product, please try again later', error });
@@ -69,7 +69,7 @@ const getMenuProductByName = async (req, res) => {
 };
 
 // function to get menu item by category with autocompletion feature
-const getMenuByCategory = async (req, res) => {
+const getMenuProductByCategory = async (req, res) => {
     try {
         const menu2 = await Product.find({ category: { $regex: req.params.category, $options: 'i' } });
         res.json(menu2);
@@ -85,5 +85,5 @@ export const menuController = {
     deleteProduct,
     getMenuProductById,
     getMenuProductByName,
-    getMenuByCategory
+    getMenuProductByCategory
 };

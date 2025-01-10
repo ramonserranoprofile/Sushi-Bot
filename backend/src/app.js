@@ -1,7 +1,7 @@
 // Import the required modules
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import mongoose from 'mongoose';
+import connectDB from '../database/mongoDB.js';
 import dotenv from 'dotenv';
 import menuRoutes from './routes/menuRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
@@ -62,16 +62,6 @@ app.use('/order', orderRoutes);
 app.use('/faq', faqRoutes);
 
 // MongoDB Connection
-const connectDB = async () => {
-    try {
-        await mongoose.connect(process.env.MONGO_URI);
-        console.log('MongoDB connected successfully');
-    } catch (error) {
-        console.error('MongoDB connection error:', error);
-        process.exit(1);
-    }
-};
-
 connectDB();
 
 export default app;

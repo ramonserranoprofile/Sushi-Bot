@@ -1,5 +1,5 @@
 import express from 'express';
-import { faq_Controller } from '../controllers/faqcontroller.js';
+import { faq_Controller } from '../controllers/faqController.js';
 
 
 const faqRouter = express.Router();
