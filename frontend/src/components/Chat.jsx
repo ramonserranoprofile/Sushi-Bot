@@ -91,13 +91,9 @@ const Chat = ({ socket, userName, room, userCount }) => {
                             <Icon name="user" />{userCount} Clientes conectados
                         </Card.Content>
                     </Card.Content>
-                </Card>
-                {/* // esperar a que se cargue el componente arriba y carga ChatBot */}
-                {buttonRef.current && (<ChatBot socket={socket} userCount={userCount} userName={userName} room={room} addMessageToList={addMessageToList} />
-                )}
-                
-            </Container>
-            
+                </Card>                
+                <ChatBot socket={socket} userCount={userCount} userName={userName} room={room} addMessageToList={addMessageToList} />                                
+            </Container>            
         </>
     );
 };

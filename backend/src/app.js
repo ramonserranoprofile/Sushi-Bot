@@ -7,18 +7,37 @@ import menuRoutes from './routes/menuRoutes.js';
 import orderRoutes from './routes/orderRoutes.js';
 import faqRoutes from './routes/faqRoutes.js';
 import cors from 'cors';
+import helmet from 'helmet';
+//import csurf from 'csurf';
 
- 
+
 // Load the environment variables from the .env file
 dotenv.config();
 
 
 // Create an instance of the Express application
+
 const app = express();
 
-app.use(cors());
+// Configuración de CORS
+const corsOptions = {
+    origin: process.env.SERVER_HOST,
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization']
+};
+
+app.use(cors(corsOptions));
+
+// Use Helmet to protect against well-known vulnerabilities
+app.use(helmet());
+
+// CSRF protection
+//app.use(csurf({ cookie: true }));
 
 // Disable X-Powered-By header
+app.disable('x-powered-by');
+// Disable X-Powered-By header
+app.disable('x-powered-by');
 // disable cors
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');

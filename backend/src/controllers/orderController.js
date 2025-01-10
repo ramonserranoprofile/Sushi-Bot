@@ -33,7 +33,7 @@ const createOrder = async (req, res) => {
     // Crear un mapa para contar las cantidades por ID
     const productQuantityMap = {};
     for (const item of productData) {
-        if (!item.id || !item.quantity || isNaN(item.quantity)) {
+        if (!item.id || !item.quantity || Number.isNaN(item.quantity)) {
             return res.status(400).json({ message: "Cada producto debe tener un id y una cantidad válida." });
         }
 
@@ -102,6 +102,11 @@ const createOrder = async (req, res) => {
 const updateOrder = async (req, res) => {
     const { products: productData, customerName } = req.body;
     // `products` es un array de objetos con { id, quantity }
+
+    // Validate productData type
+    if (!Array.isArray(productData) || productData.some(item => typeof item.id !== 'string' || typeof item.quantity !== 'number')) {
+        return res.status(400).json({ message: "Invalid product data format." });
+    }
 
     try {
         // Extraer solo los IDs de los productos

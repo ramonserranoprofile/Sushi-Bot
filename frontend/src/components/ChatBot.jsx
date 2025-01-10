@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 
 const ChatBot = ({ socket, room, userName, botName = "SushiBot", addMessageToList }) => {
@@ -8,7 +8,8 @@ const ChatBot = ({ socket, room, userName, botName = "SushiBot", addMessageToLis
         customerName: userName,
         products: [],
     });
-    const [welcomeSent, setWelcomeSent] = useState(false);
+
+    const welcomeSentRef = useRef(false); // Referencia en lugar de estado
 
     useEffect(() => {
         const handleMessagle = async (data) => {
@@ -38,28 +39,30 @@ const ChatBot = ({ socket, room, userName, botName = "SushiBot", addMessageToLis
 
         socket.on("receive_message", handleMessagle);
 
+        // Enviar el mensaje de bienvenida solo si no se ha enviado (usando la referencia)
+        if (!welcomeSentRef.current) {
+            const welcomeMessage = {
+                room: room,
+                author: botName,
+                message: `¡¡ Hola  ${userName}, Bienvenido !!. Soy ${botName}. Aquí están las opciones con las que puedes interactuar conmigo:\n
+                        1. Ver el menú\n
+                        2. Hacer un pedido\n
+                        3. Preguntar algo en la sección de Preguntas Frecuentes (FAQ)\n
+                        ¿Cómo puedo ayudarte hoy? Responde con el número de la opción que desees.`,
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+            };
+            socket.emit("send_message", welcomeMessage);
+            addMessageToList(welcomeMessage);
+            welcomeSentRef.current = true; // Marcar como enviado
+        }
+
         return () => {
             socket.off("receive_message", handleMessagle);
         };
-    }, [socket, room, botName, currentFlow, addMessageToList, welcomeSent]);
+    }, [socket, room, botName, currentFlow, addMessageToList]);
 
-    if (!welcomeSent) {
-        const welcomeMessage = {
-            room: room,
-            author: botName,
-            message: `¡¡ Hola  ${userName}, Bienvendo !!. Soy ${botName}. Aquí están las opciones con las que puedes interactuar conmigo:\n
-                    1. Ver el menú\n
-                    2. Hacer un pedido\n
-                    3. Preguntar algo en la sección de Preguntas Frecuentes (FAQ)\n
-                    ¿Cómo puedo ayudarte hoy? Responde con el número de la opción que desees.`,
-            time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        };
-        socket.emit("send_message", welcomeMessage);
-        addMessageToList(welcomeMessage);
-        setWelcomeSent(true);
-    }
-
-    const fetchMenu = async (returnAsString = true) => {
+    // Funciones fetchMenu, fetchFAQ, handleFaq, handleOrderFlow, handleCommand aquí abajo sin cambios
+const fetchMenu = async (returnAsString = true) => {
         try {
             const response = await axios.get("http://localhost:3000/menu/", {
                 headers: {
@@ -213,7 +216,6 @@ const ChatBot = ({ socket, room, userName, botName = "SushiBot", addMessageToLis
             return `Hola, Soy ${botName}, Bienvenido. Por favor, selecciona entre las opciones: \n1. Consultar Menú, \n2. Hacer un Pedido ó \n3. Hacer Preguntas Frecuentes (FAQ).`;
         }
     };
-
     return (
         <div>
             {/* Renderiza la interfaz del chatbot */}
