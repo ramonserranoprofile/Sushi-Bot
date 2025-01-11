@@ -45,7 +45,7 @@ npm init -y
 ```bash
 npm install express cookie-parser dotenv mongoose socket.io
 ```
-3a.- Instalar nodemon como dependencia de desarrollo para reiniciar el servidor automáticamente.
+3a.- Instalar nodemon como dependencia de desarrollo para reiniciar el servidor automáticamente y mayor comodidad.
 ```bash
 npm install --save-dev nodemon
 ```
@@ -74,6 +74,8 @@ git push origin main
 ```
 
 
+
+
 ## Crear un proyecto de React frontend
 1.- Crear una nueva carpeta para el proyecto de React
 ```bash
@@ -100,6 +102,7 @@ git push origin main
 ```
 
 ## App File Structure 
+Esta estructura sigue una arquitectura monolítica modular.
 
 sushi-bot/
 │
@@ -110,12 +113,12 @@ sushi-bot/
 │   │   │   ├── menuController.js       # Controlador de (menú y productos)
 │   │   │   └── orderController.js       # controlador de (Órdenes)
 │   │   ├── data/          # Datos de prueba para API
-│   │   │   ├── example-data.json      # Datos de ejemplo (Productos y FAQs)
-│   │   │   ├── example-data.json      # Datos de ejemplo (Productos y FAQs)
-│   │   │   ├── example-data.json      # Datos de ejemplo (Productos y FAQs)
-│   │   │   ├── example-data.json      # Datos de ejemplo (menú y FAQs)
-│   │   │   ├── example-data.json      # Datos de ejemplo (menú y FAQs)
-│   │   │   └── example-data.json      # Datos de ejemplo (menú y FAQs)
+│   │   │   ├── example-data.json      # Datos de ejemplo (Productos)
+│   │   │   ├── example-data.json      # Datos de ejemplo (Productos)
+│   │   │   ├── example-data.json      # Datos de ejemplo (FAQs)
+│   │   │   ├── example-data.json      # Datos de ejemplo (FAQs)
+│   │   │   ├── example-data.json      # Datos de ejemplo (Orden)
+│   │   │   └── example-data.json      # Datos de ejemplo (Orden)
 │   │   ├── database/          # Coexión a MongoDB
 │   │   ├── models/            # Modelos de MongoDB (Productos, Pedidos, Faqs)
 │   │   │   ├── Faq.js      # Modelos de Datos (FAQs)
@@ -154,4 +157,63 @@ sushi-bot/
 │   ├── README.md               # Vite info                
 │   └── vite.config.js
 ├── README.md                   # Documentacíon de la aplicación
-└── .gitignore 
+└── .gitignore
+
+
+
+Según el historial de esta sesión y el menú de preguntas frecuentes (FAQs) proporcionado, aquí hay ejemplos de mensajes que entiende el bot, incluyendo las opciones específicas relacionadas con la sección 3 de Preguntas Frecuentes del menú de opciones principal:
+
+
+### **Ejemplos de mensajes que entiende el chat-bot:**
+
+1. **Estado del restaurante (Horario y apertura):**
+   - *"¿Están abiertos?"*  
+     Respuesta: *"Nuestro horario de atención es de lunes a viernes de 12:00 PM a 10:00 PM, y los sábados de 1:00 PM a 11:00 PM, Domingos descansamos. La hora actual es ${hora_actual}. Estamos ${on_off}, ¡Esperamos tu visita!"*
+   - *"¿A qué hora cierran hoy?"*  
+     Respuesta: *"Hoy ${dia_semana} cerramos a las ${hora_cierre_hora}. ¡Esperamos tu visita!"*
+   - *"¿Cuáles son los horarios del restaurante?"*  
+     Respuesta: *"Abrimos de lunes a viernes de 12:00 PM a 10:00 PM, y los fines de semana: Sábados de 1:00 PM a 11:00 PM., Domingos descansamos. ¡Te esperamos!"*
+
+2. **Ubicación del restaurante:**
+   - *"¿Cuál es su dirección?"*  
+     Respuesta: *"Nos encontramos ubicados en la Avenida Principal, número 123, en el centro de la ciudad. ¡Te esperamos!"*
+   - *"¿Dónde están ubicados?"*  
+     Respuesta: *"Estamos en la Avenida Principal, número 123, en el centro de la ciudad."*
+
+3. **Opciones de menú y servicios:**
+   - *"¿Tienen opciones vegetarianas?"*  
+     Respuesta: *"¡Sí! Tenemos sushi vegetariano y platos como ensaladas, edamame y más."*
+   - *"¿Hacen entregas a domicilio?"*  
+     Respuesta: *"Sí, ofrecemos servicio de entrega a domicilio. Puedes ordenar a través de nuestra página web o apps como Uber Eats y Glovo."*
+   - *"¿Tienen menú para niños?"*  
+     Respuesta: *"Sí, ofrecemos un menú especial para niños con opciones suaves y sin picante."*
+
+4. **Promociones y descuentos:**
+   - *"¿Tienen promociones o descuentos?"*  
+     Respuesta: *"Ofrecemos descuentos en pedidos grandes y promociones especiales durante la semana. Consulta nuestra página web o redes sociales para más información."*
+
+5. **Reservas y eventos:**
+   - *"¿Puedo hacer una reserva?"*  
+     Respuesta: *"¡Claro! Puedes hacer una reserva llamándonos al número del restaurante o enviándonos un mensaje por WhatsApp."*
+   - *"¿Ofrecen catering para eventos?"*  
+     Respuesta: *"¡Sí! Contamos con servicio de catering para eventos pequeños y grandes. Contáctanos para más información."*
+
+6. **Restricciones dietéticas:**
+   - *"¿Tienen opciones sin gluten?"*  
+     Respuesta: *"Sí, contamos con opciones sin gluten, como sushi con arroz especial y platos adaptados para celíacos."*
+   - *"¿Ofrecen sushi sin pescado crudo?"*  
+     Respuesta: *"¡Sí! Tenemos opciones como sushi de pollo, camarones cocidos y vegetales."*
+
+7. **Tiempo estimado:**
+   - *"¿Cuánto tarda un pedido para llevar?"*  
+     Respuesta: *"El tiempo de preparación promedio es de 15 a 25 minutos, dependiendo del tamaño del pedido."*
+
+---
+
+### **Notas clave sobre las respuestas:**
+- El bot adapta las respuestas dinámicamente usando variables como:
+  - `${hora_actual}` para mostrar la hora actual.
+  - `${on_off}` para indicar si está abierto o cerrado según el horario.
+  - `${dia_semana}` para especificar el día.
+  - `${hora_cierre}` para el horario de cierre.
+- Estas variables dependen de la lógica previamente configurada para calcular si el restaurante está abierto o cerrado.

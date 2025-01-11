@@ -12,6 +12,10 @@ const ChatBot = ({ socket, room, userName, botName = "SushiBot", addMessageToLis
     const welcomeSentRef = useRef(false); // Referencia en lugar de estado
 
     useEffect(() => {
+        if (!socket) {
+            console.error("Socket no está definido en ChatBot");
+            return;
+        }
         const handleMessagle = async (data) => {
             if (data.room === room && data.author !== 'SushiBot') {
                 let botResponse = "";
@@ -95,7 +99,7 @@ const fetchMenu = async (returnAsString = true) => {
             return response.data.answer || "No encontré información sobre tu pregunta.";
         } catch (error) {
             console.error("Error al obtener la FAQ:", error);
-            return "No pude encontrar esa respuesta. Por favor inténtalo con otra pregunta.";
+            return "¡ No entendí esa pregunta !. Por favor inténtalo con otra pregunta ó escríbela correctamente.";
         }
     };
 

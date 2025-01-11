@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Container, Divider, Card, Icon, Form, Button, Message } from 'semantic-ui-react';
+import { Container, Divider, Card, Icon, Form, Button, Message, Segment, Label } from 'semantic-ui-react';
 import ChatBot from '../components/ChatBot.jsx';
 import ScrollToBottom from 'react-scroll-to-bottom';
 import './Chat.css'; // Archivo CSS adicional
@@ -15,7 +15,7 @@ const Chat = ({ socket, userName, room, userCount }) => {
                 room: room,
                 author: userName,
                 message: currentMessage,
-                time: new Date().getHours() + ':' + String(new Date().getMinutes()).padStart(2, '0'),
+                time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
             };
             await socket.emit('send_message', messageData);
             setMessageList((list) => [...list, messageData]);
@@ -27,75 +27,77 @@ const Chat = ({ socket, userName, room, userCount }) => {
         setMessageList((list) => [...list, messageData]);
     };
 
-    // useEffect(() => {
-    //     // Manejador de mensajes 
-    //     const messageHandle = (data) => {
-    //         if (data.room === room) {
-    //             setMessageList((list) => [...list, data]);
-    //         }
-    //     };
-    //     socket.on('receive_message', messageHandle);
-    //     return () => {
-    //         socket.off('receive_message', messageHandle);
-            
-    //     };
-    // }, [socket]);    
+    useEffect(() => {
+        // Asegúrate de que este código esté siendo ejecutado
+        socket.on('receive_message', (message) => {
+        console.log('Mensaje recibido:', message);
+        });
+
+        return () => {
+            socket.off('receive_message'); // Limpiar el evento al desmontar
+        };
+    }, [socket]);   
 
     const buttonRef = useRef(null);
-
+    
     return (
         <>            
-            <Container>
-                <Card fluid>
-                    <Card.Content header={`Chat en vivo | Sala: ${room}`} />
-                    <Card.Content style={{ minHeight: '400px', padding: '5px' }}>
-                        <Card.Content extra>
-                            <Icon name="user" />
-                            {userName}
-                        </Card.Content>                        
+            <Container style={{ marginTop: '2rem' }}>
+                <Card fluid color="teal">
+                    <Card.Content>
+                        <Card.Header>
+                            <Icon name="chat" color="teal" /> Chat en Vivo | Sala: {room}
+                        </Card.Header>
+                        <Divider />
+                        <Card.Meta>
+                            <Icon name="user" color="teal" /> {userName} | Usuarios conectados: {userCount}
+                        </Card.Meta>
+                    </Card.Content>
+                    <Card.Content style={{ minHeight: '400px', overflowY: 'auto', background: '#f9f9f9' }}>
                         <ScrollToBottom className="message-container">
                             {messageList.map((messageContent, index) => (
-                                <Message
-                                    key={index}
-                                    style={{textAlign: userName === messageContent.author ? 'right' : 'left'}}
-                                    success={userName === messageContent.author}
-                                    info={userName !== messageContent.author}
-                                >
-                                    <Message.Header>{messageContent.message}</Message.Header>
-                                    <p>
-                                        Enviado por: {messageContent.author}, a las{' '}
-                                        <i style={{ fontSize: '10px' }}>{messageContent.time}</i>
-                                    </p>
+                                <Message key={index}>                                            
+                                    <Segment                                        
+                                        color={userName === messageContent.author ? 'teal' : 'grey'}                                        
+                                        style={{
+                                            marginBottom: '1rem',
+                                            textAlign: userName === messageContent.author ? 'right' : 'left',
+                                        }}
+                                    >
+                                        <Label color={userName === messageContent.author ? 'teal' : 'grey'} pointing="below">
+                                            {messageContent.author}
+                                        </Label>
+                                        <p style={{ fontSize:'1.1rem', }}>{messageContent.message}</p>
+                                        <div style={{ fontSize: '0.8rem', color: '#888' }}>
+                                            {messageContent.time}
+                                        </div>
+                                    </Segment>
                                 </Message>
-                            ))}                            
-                        </ScrollToBottom>                        
+                            ))}
+                        </ScrollToBottom>
                     </Card.Content>
                     <Card.Content extra>
-                        <Form>
-                            <Form.Field>
-                                <div className="ui action input">
-                                    <input
-                                        type="text"
-                                        placeholder="Mensaje..."
-                                        value={currentMessage}
-                                        onChange={(event) => setCurrentMessage(event.target.value)}
-                                    />
-                                    <Button className="ui teal icon right labeled button" ref={buttonRef} onClick={sendMessage}>
-                                        <Icon name="send" />Enviar
-                                    </Button>
-                                </div>
-                            </Form.Field>
+                        <Form onSubmit={sendMessage}>
+                            <Form.Group>
+                                <Form.Input
+                                    placeholder="Escribe tu mensaje..."
+                                    type="text"
+                                    role="textbox"
+                                    value={currentMessage}
+                                    onChange={(e) => setCurrentMessage(e.target.value)}
+                                    width={14}
+                                />
+                                <Button className="ui teal icon right labeled button" ref={buttonRef}>
+                                    <Icon name="send" />
+                                    Enviar
+                                </Button>
+                            </Form.Group>
                         </Form>
-                        <Divider />
-                        <Card.Content extra>
-                            <Icon name="user" />{userCount} Clientes conectados
-                        </Card.Content>
                     </Card.Content>
-                </Card>                
-                <ChatBot socket={socket} userCount={userCount} userName={userName} room={room} addMessageToList={addMessageToList} />                                
-            </Container>            
+                </Card>
+                <div><ChatBot socket={socket} userCount={userCount} userName={userName} room={room} addMessageToList={addMessageToList} /></div>  
+            </Container>
         </>
-    );
-};
+    )};
 
 export default Chat

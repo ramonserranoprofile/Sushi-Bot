@@ -1,0 +1,17 @@
+input[readonly] {
+    background-color: #f3f3f3 !important;
+    cursor: not-allowed;
+}
+
+.ui.button {
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.ui.button:hover {
+    background-color:teal !important;
+    transform: translateY(-2px);
+}
+
+.ui.card {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1) !important;
+}

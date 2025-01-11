@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import io from 'socket.io-client';
-import { Container, Card, Icon, Form, Button } from 'semantic-ui-react';
+import { Container, Card, Icon, Form, Button, Header, Divider } from 'semantic-ui-react';
 import Chat from './components/Chat.jsx';
 
+
 const socket = io.connect(import.meta.env.VITE_SERVER_HOST);
+
 
 function App() {
   const [userName, setUsername] = useState("");
@@ -18,49 +20,78 @@ function App() {
       setShowChat(true);
     }
   };
+  
 
-  useEffect(() => {
-    // Escuchar el evento 'usersCount' para actualizar el contador de usuarios
+useEffect(() => {
+    // Escuchar el evento de conteo de usuarios
     const handleUserCount = (count) => {
-      setUserCount(count);  // Actualizar el contador de usuarios
+      setUserCount(count); // Establece el conteo de usuarios
     };
-
-    socket.on('usersCount', handleUserCount);  // Escuchar los cambios de usuarios
-
-    // Limpiar el evento cuando el componente se desmonte
+    
+    // Conectar el socket
+    socket.on('usersCount', handleUserCount);
+    
+    // Limpiar el socket al desmontar el componente
     return () => {
-      socket.off('usersCount', handleUserCount);
+      if (socket) {
+        socket.off('usersCount', handleUserCount);
+      };
     };
-  }, []);
+}, [socket]);
 
+  
   return (
-    <Container>
-      {!showChat ? (
-        <Card fluid>
-          <Card.Content header="Unirme al Sushi Chat-Bot" />
-          <Card.Content description="Sushi Bar" />
-          <Card.Content>
-            <Form>
-              <Form.Field>
-                <label>Nombre de usuario</label>
-                <input
-                  placeholder="Nombre de usuario"
-                  onChange={(event) => setUsername(event.target.value)}
-                />
-              </Form.Field>
-              <Button type="submit" onClick={joinRoom}>
-                Unirse
-              </Button>
-            </Form>
-          </Card.Content>
-          <Card.Content extra>
-            <Icon name="user" />{userCount} Clientes conectados
-          </Card.Content>
-        </Card>
-      ) : (
-        <Chat socket={socket} userCount={userCount} userName={userName} room="GENERAL" />  // Aquí se muestra el chat después de unirse
-      )}
-    </Container>
+    <>
+      <Container style={{ marginTop: '2rem', maxWidth: '600px' }}>
+        {!showChat ? (
+          <Card fluid color="teal">
+            <Card.Content>
+              <Header as="h2" icon textAlign="center">
+                <Icon name="comments" circular color="teal" />
+                <Header.Content>Welcome and join Sushi Chat-Bot</Header.Content>
+              </Header>              
+            </Card.Content>
+            <Card.Content>
+              <Form>
+                <Form.Field>
+                  <label style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Username</label>
+                  <input
+                    placeholder="Nombre de usuario . . ."
+                    onChange={(event) => setUsername(event.target.value)}
+                    style={{ borderRadius: '5px', padding: '10px' }}
+                  />
+                </Form.Field>
+                <Form.Field>
+                  <label style={{ fontWeight: 'bold', fontSize: '1.1rem' }}>Room</label>
+                  <input
+                    value="GENERAL"
+                    readOnly
+                    style={{ borderRadius: '5px', padding: '10px', backgroundColor: '#f9f9f9' }}
+                  />
+                </Form.Field>
+                <Button                  
+                  fluid
+                  color="teal"
+                  size="large"
+                  style={{ marginTop: '1rem', borderRadius: '5px' }}
+                  onClick={joinRoom}
+                >
+                  <Icon name="sign-in" />
+                  Entrar
+                </Button>
+              </Form>
+            </Card.Content>
+            <Card.Content extra>
+              <Icon name="user" color="teal" />
+              {userCount} users online
+            </Card.Content>
+          </Card>
+        ) : (
+          <div className="chat-container"><Chat socket={socket} userCount={userCount} userName={userName} room="GENERAL" /></div>
+        )}
+      </Container>
+
+    </>
   );
 }
 
