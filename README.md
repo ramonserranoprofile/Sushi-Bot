@@ -161,7 +161,7 @@ sushi-bot/
 
 
 
-Según el historial de esta sesión y el menú de preguntas frecuentes (FAQs) proporcionado, aquí hay ejemplos de mensajes que entiende el bot, incluyendo las opciones específicas relacionadas con la sección 3 de Preguntas Frecuentes del menú de opciones principal:
+Mensajes de el Bot entiende: Aquí hay ejemplos de mensajes que entiende el bot, incluyendo las opciones específicas como indicar si estamos abierto o no, y el tiempo actual:
 
 
 ### **Ejemplos de mensajes que entiende el chat-bot:**
@@ -206,7 +206,7 @@ Según el historial de esta sesión y el menú de preguntas frecuentes (FAQs) pr
 
 7. **Tiempo estimado:**
    - *"¿Cuánto tarda un pedido para llevar?"*  
-     Respuesta: *"El tiempo de preparación promedio es de 15 a 25 minutos, dependiendo del tamaño del pedido."*
+     Respuesta: *"El tiempo de preparación y envio promedio es de 15 a 25 minutos, dependiendo del tamaño del pedido."*
 
 ---
 
@@ -217,3 +217,19 @@ Según el historial de esta sesión y el menú de preguntas frecuentes (FAQs) pr
   - `${dia_semana}` para especificar el día.
   - `${hora_cierre}` para el horario de cierre.
 - Estas variables dependen de la lógica previamente configurada para calcular si el restaurante está abierto o cerrado.
+
+### **Errores que se manejan en la App**
+
+1. Manejo de Errores en las Rutas (Express.js)
+Respuestas HTTP adecuadas: Utilizas códigos de estado HTTP apropiados para indicar distintos tipos de errores, como 400 para solicitudes incorrectas (por ejemplo, cuando los datos no tienen el formato adecuado) y 404 cuando no se encuentra el recurso solicitado.
+
+2. Manejo de Errores de Base de Datos
+Utilizas MongoDB con Mongoose y los errores son correctamente manejados mediante bloques try-catch para evitar que se caiga la aplicación. Además, usas un mensaje de error claro (error.message) al capturar cualquier excepción de la base de datos.
+
+3. Validación de Entradas
+En la creación y actualización de pedidos, validas la estructura de los datos (products y customerName). Si el formato no es correcto, devuelves un mensaje de error 400 Bad Request.
+
+4. Manejo de Errores de API
+Al realizar peticiones a la API, asegúrate de manejar adecuadamente los errores, como respuestas con códigos 400, 404, 500, etc. Deberías mostrar mensajes de error en la interfaz de usuario para que el usuario sepa lo que ocurrió (por ejemplo, si el pedido no se pudo crear o si hay productos no disponibles).
+
+5. Manejo middlewares globales para manejar errores como 404 (recurso no encontrado), 400 (solicitud incorrecta) o 500 (Error Interno del Servidor)

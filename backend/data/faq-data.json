@@ -9,7 +9,7 @@
     },
     {
         "question": "¿A que hora cierran?",
-        "answer": "Hoy ${dia_semana} cerramos a las ${hora_cierre_hora}. ¡Esperamos tu visita!"
+        "answer": "Hoy ${dia_semana} cerramos a las ${hora_cierre}. ¡Esperamos tu visita!"
     },   
     {
         "question": "¿Cuáles son los horarios del restaurante?",

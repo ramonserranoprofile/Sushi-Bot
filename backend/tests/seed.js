@@ -53,4 +53,4 @@ const loadInitialData = async () => {
 // run script
 loadInitialData();
 
-// It runs with:  node database/seed.js
+// It runs with:  node tests/seed.js

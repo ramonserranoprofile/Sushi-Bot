@@ -32,5 +32,5 @@ const loadFAQs = async () => {
 
 loadFAQs();
 
-// Ejecutar la función para cargar las FAQs
-// node database/seedFAQs.js
+// Ejecutar la función para cargar las FAQs en MongoDB
+// node tests/seedFAQs.js

@@ -36,8 +36,7 @@ app.use(helmet());
 
 // Disable X-Powered-By header
 app.disable('x-powered-by');
-// Disable X-Powered-By header
-app.disable('x-powered-by');
+
 // disable cors
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
@@ -45,7 +44,7 @@ app.use((req, res, next) => {
     res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
     next();
 });
-//app.disable('x-powered-by');
+
 // middleware Configuration 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -63,5 +62,19 @@ app.use('/faq', faqRoutes);
 
 // MongoDB Connection
 connectDB();
+
+// Middleware para manejar recursos no encontrados (404)
+app.use((req, res, next) => {
+    res.status(404).json({ message: "Recurso no encontrado" });
+});
+
+// Middleware global para manejar errores 400 y 500
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    if (err.status === 400) {
+        return res.status(400).json({ message: err.message || "Solicitud incorrecta" });
+    }
+    res.status(500).json({ message: "Error interno del servidor" });
+});
 
 export default app;
