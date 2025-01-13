@@ -99,6 +99,10 @@ git add .
 git commit -m "Initial commit"
 git push origin main
 ```
+7. Clonar el repositorio para ser utilizado y luego iniciar tanto Front como back en bash separados con npm start ó npm run dev
+```bash
+git clone https://github.com/ramonserranoprofile/Sushi-Bot.git
+```
 
 ---
 
