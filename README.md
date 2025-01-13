@@ -104,7 +104,7 @@ git push origin main
 
 ## App File Structure 
 Esta estructura sigue una arquitectura monolítica modular.
-
+```bash
 sushi-bot/
 │
 ├── backend/
@@ -134,12 +134,12 @@ sushi-bot/
 │   │   ├── index.js          # Configuración del servidor Express
 │   ├── tests/                 # Tests para el backend datos de prueba para ser usados en la API con Postman
 │   │   ├── seed.js           # Script para cargar datos iniciales (Productos)
-│   │   └── seed-FAQ.js       # Script para cargar datos iniciales (FAQs)    
-│   ├── package.json            # Dependencias y scripts de la aplicación           
+│   │   └── seed-FAQ.js       # Script para cargar datos iniciales (FAQs)
+│   ├── package.json            # Dependencias y scripts de la aplicación
 │   └── .env.example           # Variables de entorno necesarias
 │
 ├── frontend/
-│   ├── public/                 # Archivos públicos accesibles desde la raíz del servidor   
+│   ├── public/                 # Archivos públicos accesibles desde la raíz del servidor
 │   │   ├── favicon.ico         # Ícono de la aplicación
 │   │   └── manifest.json       # Archivo de configuración para aplicaciones web
 │   ├── src/
@@ -155,11 +155,11 @@ sushi-bot/
 │   ├── .env.example            # Variables de entorno necesarias
 │   ├── index.html              # Archivo HTML principal
 │   ├── package.json            # Dependencias y scripts de la aplicación
-│   ├── README.md               # Vite info                
+│   ├── README.md               # Vite info
 │   └── vite.config.js
 ├── README.md                   # Documentacíon de la aplicación
 └── .gitignore
-
+```
 ---
 
 Mensajes de el Bot entiende: Aquí hay ejemplos de mensajes que entiende el bot, incluyendo las opciones específicas como indicar si estamos abierto o no, y el tiempo actual:
