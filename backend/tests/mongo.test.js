@@ -1,16 +1,16 @@
 import { describe, it, beforeAll, afterAll, expect } from 'vitest';
 import mongoose from 'mongoose';
 import Order from '../src/models/Order.js';  // Tu modelo Order
-import { setupTestDB, cleanupTestDB } from './testSetupMongo.js';  // Funciones de configuración y limpieza
+import { setupTestDB, cleanupTestDB } from './testSetupMongo.js';  // Setup and cleanup functions
 
 describe('Order Model', () => {
     beforeAll(async () => {
-        // Configurar y conectar a la base de datos en memoria antes de las pruebas
+        // Set up and connect to the in-memory database before tests        
         await setupTestDB();
     });
 
     afterAll(async () => {
-        // Limpiar la base de datos y cerrar la conexión después de las pruebas
+        // Clean up the database and close the connection after tests        
         await cleanupTestDB();
     });
 
@@ -19,7 +19,7 @@ describe('Order Model', () => {
             customerName: 'John Doe',
             products: [
                 {
-                    product: new mongoose.Types.ObjectId(),  // Generar un ObjectId válido
+                    product: new mongoose.Types.ObjectId(),  // Generate a valid ObjectId
                     name: 'Product 1',
                     price: 100,
                     quantity: 2,
@@ -29,11 +29,11 @@ describe('Order Model', () => {
             status: 'pending',
         };
 
-        // Crear la orden en la base de datos
+        // Create order in database
         const order = new Order(orderData);
         await order.save();
 
-        // Verificar que la orden se haya creado correctamente
+        // Verify order is created successfully
         const savedOrder = await Order.findById(order._id).exec();
         expect(savedOrder).not.toBeNull();
         expect(savedOrder.customerName).toBe('John Doe');
@@ -54,7 +54,7 @@ describe('Order Model', () => {
                 },
             ],
             total: 50,
-            // Faltando customerName
+            // Failing customerName here
         };
 
         try {

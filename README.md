@@ -22,7 +22,7 @@ Tres semanas.
 
 5. Entregables:
 Repositorio de GitHub con el código fuente.
-Documentación de cómo ejecutar el proyecto. (README.md) y Documento .doc
+Documentación de cómo ejecutar el proyecto. (README.md) y Documento .doc (https://docs.google.com/document/d/1lGrd1W0_PIgx2TbD3wmdn92UnoBYOpi5wItdQTWuRZ0/edit?usp=sharing) con el detalle de documentación de los endpoints , lóogica de la App, 
 
 # Sushi Bot
 
@@ -53,7 +53,7 @@ npm install --save-dev nodemon
 ```json
 "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "test",
     "start": "node index.js",
     "dev": "nodemon index.js"
   },
@@ -73,8 +73,7 @@ git commit -m "Initial commit"
 git push origin main
 ```
 
-
-
+---
 
 ## Crear un proyecto de React frontend
 1.- Crear una nueva carpeta para el proyecto de React
@@ -100,6 +99,8 @@ git add .
 git commit -m "Initial commit"
 git push origin main
 ```
+
+---
 
 ## App File Structure 
 Esta estructura sigue una arquitectura monolítica modular.
@@ -159,7 +160,7 @@ sushi-bot/
 ├── README.md                   # Documentacíon de la aplicación
 └── .gitignore
 
-
+---
 
 Mensajes de el Bot entiende: Aquí hay ejemplos de mensajes que entiende el bot, incluyendo las opciones específicas como indicar si estamos abierto o no, y el tiempo actual:
 
@@ -218,6 +219,8 @@ Mensajes de el Bot entiende: Aquí hay ejemplos de mensajes que entiende el bot,
   - `${hora_cierre}` para el horario de cierre.
 - Estas variables dependen de la lógica previamente configurada para calcular si el restaurante está abierto o cerrado.
 
+---
+
 ### **Errores que se manejan en la App**
 
 1. Manejo de Errores en las Rutas (Express.js)
@@ -233,3 +236,37 @@ En la creación y actualización de pedidos, validas la estructura de los datos 
 Al realizar peticiones a la API, asegúrate de manejar adecuadamente los errores, como respuestas con códigos 400, 404, 500, etc. Deberías mostrar mensajes de error en la interfaz de usuario para que el usuario sepa lo que ocurrió (por ejemplo, si el pedido no se pudo crear o si hay productos no disponibles).
 
 5. Manejo middlewares globales para manejar errores como 404 (recurso no encontrado), 400 (solicitud incorrecta) o 500 (Error Interno del Servidor)
+
+---
+
+### **Tests**
+
+*Pruebas: Frontend*
+Ubicado en folder /frontend
+
+```bash
+npm test
+```
+
+Integration test - Frontend to Backend communication over soket.io with 'Hello World' message emit - Result: message emited
+Imtegration test - Communication with handshake waiting from client to server - Result: Success
+Integration test - User Count > Debe actualizar el conteo de usuarios cuando se recibe el evento usersCount - Result: updated 
+Unit test - Initial Render > should render the initial form with username and room input - Result: rendered
+Unit test - should join the chat room when username is provided - Result 'Usuario: TestUser se unió a la sala GENERAL'
+
+*Pruebas: Backend y DataBase*
+Ubicado en folder /backend
+
+```bash
+npm test
+```
+
+Server Tests
+Unit test - should get menu products JSON response with status '200' (GET '/menu') - Result: 200 -Pass
+Unit test - should get orders data JSON response with status '200' (GET '/order') - Result 200 - Pass
+Unit test - shoould get Faq data JSON response witd status 200 (GET '/faq') - Result 200 - Pass
+
+
+MongoDB Tests
+Integration Test - Should return error 400 and prevent creation of a document order in MongoDB when required fields are missing (POST '/order' without customerName in the request body). - Result: Error 400 and preventing MongoDB document order data creation.
+Integration Test - Should create a MongoDB document for an order with products (POST '/order' with valid order data) - Result: status 200 and successfully saved the order as a document in MongoDB.

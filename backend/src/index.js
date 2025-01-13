@@ -26,28 +26,28 @@ io.on('connection', (socket) => {
     console.log('Connected users:', connectedUsers);
     io.emit('usersCount', connectedUsers);
 
-    // Evento para unirse a una sala
+    // Event to join a room    
     socket.on('join_room', (room) => {
         const socketJoin = socket.join(room);
         console.log(`User with ID: ${socket.id} joined room: ${room}`);        
     });
 
-    // Manejo de mensajes
+    // Message handling    
     socket.on('send_message', (data) => {
         console.log(data);
 
-        // Solo permitir que ChatBot envíe mensajes a la sala
+        // Only allow ChatBot to send messages to the room        
         if (data.author !== 'SushiBot') {
-            // Emitir el mensaje solo al usuario que lo envía
+            // ChatBot message only to user that sends
             socket.emit('receive_message', data);
             return;
         }
 
-        // Emitir el mensaje del ChatBot a todos los usuarios en la sala
+        // Emit ChatBot message to all users in the room        
         io.to(data.room).emit('receive_message', data);
     });
 
-    // Manejo de desconexión
+    // Disconnect handling    
     socket.on('disconnect', () => {
         console.log('User disconnected:', socket.id);
         connectedUsers--;

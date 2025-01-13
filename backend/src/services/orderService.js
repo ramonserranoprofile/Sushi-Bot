@@ -1,8 +1,6 @@
-// sushi_bot_backend/services/orderService.js
-
 import Order from '../models/Order.js';
 
-// Función para actualizar el estado de un pedido
+// Function to update order state
 const updateOrderStatus = async (id, status) => {
     const order = await Order.findByIdAndUpdate(id, status, { new: 'cancelled' });
     if (!order) {

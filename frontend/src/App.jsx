@@ -23,15 +23,15 @@ function App() {
   
 
 useEffect(() => {
-    // Escuchar el evento de conteo de usuarios
+    // Listen event user count
     const handleUserCount = (count) => {
-      setUserCount(count); // Establece el conteo de usuarios
+      setUserCount(count); // set user count
     };
     
-    // Conectar el socket
+    // Conect to socket
     socket.on('usersCount', handleUserCount);
     
-    // Limpiar el socket al desmontar el componente
+    // cleansocket once unmount component
     return () => {
       if (socket) {
         socket.off('usersCount', handleUserCount);

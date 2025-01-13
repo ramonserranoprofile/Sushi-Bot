@@ -19,7 +19,7 @@ dotenv.config();
 
 const app = express();
 
-// Configuración de CORS
+// Config CORS
 const corsOptions = {
     origin: process.env.SERVER_HOST,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
@@ -63,12 +63,12 @@ app.use('/faq', faqRoutes);
 // MongoDB Connection
 connectDB();
 
-// Middleware para manejar recursos no encontrados (404)
+// Middleware to handle not found resource (404)
 app.use((req, res, next) => {
     res.status(404).json({ message: "Recurso no encontrado" });
 });
 
-// Middleware global para manejar errores 400 y 500
+// Middleware global to handle errors 400 y 500
 app.use((err, req, res, next) => {
     console.error(err.stack);
     if (err.status === 400) {

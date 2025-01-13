@@ -21,28 +21,28 @@ describe('App Component - User Count', () => {
     let socketMock;
 
     beforeEach(() => {
-        // Crear un mock de socket antes de cada prueba
+        // Create a socket mock before each test
         socketMock = io();
     });
 
     afterEach(() => {
-        vi.clearAllMocks(); // Limpiar mocks después de cada prueba
+        vi.clearAllMocks(); // clean mocks after each test
     });
 
     test('Debe actualizar el conteo de usuarios cuando se recibe el evento usersCount', () => {
         render(<App />);
 
-        // Buscar la función de callback para el evento 'usersCount'
+        // Find the callback function for the 'usersCount' event
         const handleUserCount = socketMock.on.mock.calls.find(
             ([eventName]) => eventName === 'usersCount'
             )[1];
 
-        // Simular el evento 'usersCount' con 5 usuarios
+        // Simulate the 'usersCount' event with 5 users 
         act(() => {
             handleUserCount(5);
         });
 
-        // Verificar que el DOM muestra "5 users online"
+        // Verify DOM shows "5 users online"
         const userCountText = screen.getByText(/5 users online/i);
         expect(userCountText).toBeInTheDocument();
     });

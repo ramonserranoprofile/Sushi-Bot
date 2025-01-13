@@ -15,7 +15,7 @@ beforeAll(() => {
     httpServer = http.createServer();
     ioInstance = new Server(httpServer);
 
-    // Iniciar servidor en un puerto dinámico
+    // Start server on a dynamic port    
     return new Promise((resolve) => {
         httpServer.listen(() => {
         resolve();
@@ -61,14 +61,14 @@ beforeEach(() => {
  * Tests
  */
 describe('Socket.IO basic example with Vitest', () => {
-    // test 1  Comunicación Frontend con Backend emit de mensaje Hello World
+    // test 1  Frontend to Backend communication with Hello World message emit    
     it('should communicate', async () => {
         const testMessage = 'Hello World';
 
-        // Configurar el servidor para emitir un evento
+        // Configure the server to emit an event        
         ioInstance.emit('echo', testMessage);
 
-        // Escuchar el evento en el cliente
+        // Listen for the event on the client        
         await new Promise((resolve) => {
         socket.once('echo', (message) => {
             expect(message).toBe(testMessage);
@@ -76,20 +76,20 @@ describe('Socket.IO basic example with Vitest', () => {
         });
         });
 
-        // Verificar que el servidor se conectó al cliente
+        // Verify that the server connected to the client        
         ioInstance.on('connection', (clientSocket) => {
-        expect(clientSocket).toBeDefined();
+            expect(clientSocket).toBeDefined();
         });
     });
-    // test 2  Comunicación con espera de Handshake desde el cliente al servidor
+    // test 2  Communication with handshake wait from client to server    
     it('should communicate with waiting for socket.io handshakes', async () => {
-        // Emitir un evento desde el cliente hacia el servidor
+        // Emit an event from client to server        
         socket.emit('example', 'some messages');
 
-        // Esperar un pequeño retraso (simula operaciones asíncronas del servidor)
+        // Wait for a small delay (simulates server asynchronous operations)        
         await new Promise((resolve) => setTimeout(resolve, 50));
 
-        // Aquí podrías agregar expectativas del lado del servidor si fuera necesario
-        expect(true).toBe(true); // Solo para asegurarte de que no hay errores
+        // more expectations can be added on the server side        
+        expect(true).toBe(true); // only to ensure not errors
     });
 });

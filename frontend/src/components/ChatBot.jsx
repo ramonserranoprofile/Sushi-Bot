@@ -9,7 +9,7 @@ const ChatBot = ({ socket, room, userName, botName = "SushiBot", addMessageToLis
         products: [],
     });
 
-    const welcomeSentRef = useRef(false); // Referencia en lugar de estado
+    const welcomeSentRef = useRef(false); // Reference instead State
 
     useEffect(() => {
         if (!socket) {
@@ -43,7 +43,7 @@ const ChatBot = ({ socket, room, userName, botName = "SushiBot", addMessageToLis
 
         socket.on("receive_message", handleMessagle);
 
-        // Enviar el mensaje de bienvenida solo si no se ha enviado (usando la referencia)
+        // Send welcome message only if it hasn't been sent yet (using ref)        
         if (!welcomeSentRef.current) {
             const welcomeMessage = {
                 room: room,
@@ -57,7 +57,7 @@ const ChatBot = ({ socket, room, userName, botName = "SushiBot", addMessageToLis
             };
             socket.emit("send_message", welcomeMessage);
             addMessageToList(welcomeMessage);
-            welcomeSentRef.current = true; // Marcar como enviado
+            welcomeSentRef.current = true; // set as sent
         }
 
         return () => {
@@ -65,8 +65,8 @@ const ChatBot = ({ socket, room, userName, botName = "SushiBot", addMessageToLis
         };
     }, [socket, room, botName, currentFlow, addMessageToList]);
 
-    // Funciones fetchMenu, fetchFAQ, handleFaq, handleOrderFlow, handleCommand aquí abajo sin cambios
-const fetchMenu = async (returnAsString = true) => {
+    // Functions fetchMenu, fetchFAQ, handleFaq, handleOrderFlow, handleCommand below without changes
+    const fetchMenu = async (returnAsString = true) => {
         try {
             const response = await axios.get("http://localhost:3000/menu/", {
                 headers: {
@@ -114,13 +114,18 @@ const fetchMenu = async (returnAsString = true) => {
     };
 
     const handleOrderFlow = async (message) => {
-        if (message.toLowerCase() === "comprar") {
+        if (message.toLowerCase() === "volver") {
+            // delete products from the order if there was something included before going back
+            setOrder({ products: [] });
+            setCurrentFlow(null);
+            return "Por favor, selecciona entre las opciones  1. Consultar Menú, 2. Hacer un Pedido  o 3. Hacer Preguntas Frecuentes (FAQ).";
+        } else if (message.toLowerCase() === "comprar") {
             setCurrentFlow(null);
 
             const orderData = {
                 customerName: userName,
                 products: order.products.map(product => ({
-                    id: product._id, // Cambiado a _id para coincidir con el backend
+                    id: product._id, // Changed to _id to match with backend                    
                     quantity: product.quantity,
                 })),
             };
@@ -134,21 +139,21 @@ const fetchMenu = async (returnAsString = true) => {
                     },
                 });
 
-                if (response.status === 201) { // Verificar si la creación fue exitosa
+                if (response.status === 201) { // Verify if creation was successful                    
                     const { customerName, products, total } = response.data;
 
-                    // Verificar que `summary` sea un array
+                    // Verify `summary` is an array
                     if (Array.isArray(products)) {
-                        // Construir el mensaje de resumen
+                        // Build summary message 
                         let resumenMensaje = "Resumen de tu pedido:\n";
-                        // Iterar sobre los productos y construir el resumen
+                        // Iterate over products and build summary
                         products.forEach((item) => {
                             resumenMensaje += `- ${item.name}: ${item.quantity} x $${item.price.toFixed(2)}\n`;
                         });
 
                         resumenMensaje += `Total: $${total.toFixed(2)}`;
 
-                        // Resetear el pedido y devolver el mensaje de resumen
+                        //Reset the order and return the summary message   
                         setOrder({ products: [] });
 
                         return `Pedido completado. Procesando tu orden...\n\n${resumenMensaje}`;
@@ -200,7 +205,7 @@ const fetchMenu = async (returnAsString = true) => {
                 };
             });
 
-            return `Producto agregado: ${product.name} - $${product.price}. ¿Deseas agregar algo más? Ingresa el Nombre EXACTO DEL PRODUCTO, o responde 'Comprar' si finalizaste tu pedido.`;
+            return `Producto agregado: ${product.name} - $${product.price}. ¿Deseas agregar algo más? Ingresa el Nombre EXACTO DEL PRODUCTO, escribe 'Volver' para salir ó responde 'Comprar' si finalizaste tu pedido.`;
         } else {
             return "No encontré ese producto en el menú. Intenta con otro.";
         }
@@ -212,7 +217,7 @@ const fetchMenu = async (returnAsString = true) => {
             return `¡ ${userName} !, aquí está nuestro menú:\n${menuText}`;
         } else if (command === "2") {
             setCurrentFlow("order");
-            return `¿Qué producto deseas agregar a tu pedido, ${userName}? Escribe el nombre del producto.`;
+            return `¿Qué producto deseas agregar a tu pedido, ${userName}? Escribe el nombre del producto. Si te arrepentiste escribe 'Volver'`;
         } else if (command === "3") {
             setCurrentFlow("faq");
             return "Por favor, escribe tu pregunta. Tembién puedes escribir 'Volver' para salir al Menú principal";
@@ -222,7 +227,7 @@ const fetchMenu = async (returnAsString = true) => {
     };
     return (
         <div>
-            {/* Renderiza la interfaz del chatbot */}
+            {/* Renders the chatbot interface */ }
         </div>
     );
 };

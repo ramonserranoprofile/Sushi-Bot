@@ -12,8 +12,8 @@ const getFaqs = async (req, res) => {
 
 // Function to get FAQ by question and replace variables dynamically
 const getFaqByQuestion = async (req, res) => {
-    const { question } = req.params; // Obtener solo la pregunta de los parámetros
-
+    const { question } = req.params; // Get only the question from the parameters
+        
     if (!question || question.length <= 3) {
         return res.status(400).json({ message: 'El parámetro "question" es obligatorio.' });
     }
@@ -21,14 +21,14 @@ const getFaqByQuestion = async (req, res) => {
     try {
         const sanitizedQuestion = question.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 
-        // Separar las palabras del item.name en un array y filtrar palabras cortas (menos de 4 letras)
+        // Split the words of item.name into an array and filter short words (less than 4 letters)
         const item = { name: question.replace(/[?¡!¿,.:´`^~]/g, ' ') };
         console.log('ITEMS:', item.name);
         const words = item.name
             .split(' ')
             .filter(word => word.trim().length >= 4); // Filtrar palabras de al menos 4 letras
 
-        // Construir la consulta MongoDB con coincidencia aproximada
+        // Build MongoDB query with approximate matching
         const faq = await Faq.findOne({
             $or: words.map(word => ({
                 question: {
@@ -41,7 +41,7 @@ const getFaqByQuestion = async (req, res) => {
             return res.status(404).json({ message: 'Pregunta no encontrada.' });
         }
 
-        // Variables dinámicas
+        // Dynamic variables        
         const hora_actual = new Date()
             .toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', hour12: true })
             .replace(/\./g, '')
@@ -50,7 +50,7 @@ const getFaqByQuestion = async (req, res) => {
 
         const dia_semana = new Date().toLocaleDateString('es-ES', { weekday: 'long' });
 
-        // Según el horario de trabajo de la semana, extrae las horas de apertura y cierre
+        // According to the weekly work schedule, extract the opening and closing hours
         const hora_apertura_semana = "12:00 PM";
         const hora_cierre_semana = "10:00 PM";
         const hora_apertura_sabado = "01:00 PM";
@@ -58,9 +58,9 @@ const getFaqByQuestion = async (req, res) => {
         const hora_apertura_domingo = "Cerrados";
         const hora_cierre_domingo = "Cerrados";
 
-        // Determina las horas de apertura y cierre según el día de la semana
+        // Determine opening and closing hours according to the day of the week
         const hora_apertura =
-            dia_semana === "sábado"
+            dia_semana === "sábado"            
                 ? hora_apertura_sabado
                 : dia_semana === "domingo"
                     ? hora_apertura_domingo
@@ -73,32 +73,32 @@ const getFaqByQuestion = async (req, res) => {
                     ? hora_cierre_domingo
                     : hora_cierre_semana;
 
-        // Función para convertir hora en formato 12 horas a minutos desde medianoche
+        // Function to convert time from 12-hour format to minutes since midnight
         function convertirHora(hora12) {
-            if (hora12 === "Cerrados") return null; // Si está cerrado todo el día, no tiene sentido convertir la hora
+            if (hora12 === "Cerrados") return null;  // If it's closed all day, there's no point in converting the time
             const [hora, minuto] = hora12.match(/\d{1,2}/g);
             const ampm = hora12.slice(-2);
             let hora24 = parseInt(hora, 10);
             if (ampm === "PM" && hora24 !== 12) hora24 += 12;
             if (ampm === "AM" && hora24 === 12) hora24 = 0;
-            return hora24 * 60 + parseInt(minuto, 10); // Convertir a minutos desde medianoche
+            return hora24 * 60 + parseInt(minuto, 10);  // Convert to minutes since midnight        
         }
 
-        // Convertir horas a minutos desde medianoche
+        
         const hora_apertura_24 = convertirHora(hora_apertura);
         const hora_cierre_24 = convertirHora(hora_cierre);
         const hora_actual_24 = convertirHora(hora_actual);
 
-        // Determinar estado abierto o cerrado
-        let on_off = "cerrados"; // Por defecto el establecimiento está cerrado
+        // Determine open or closed status        
+        let on_off = "cerrados"; // by default restaurant closed
 
         if (hora_apertura_24 !== null && hora_cierre_24 !== null) {
             if (hora_actual_24 >= hora_apertura_24 && hora_actual_24 <= hora_cierre_24) {
-                on_off = "abiertos"; // La hora actual está dentro del horario de apertura y cierre
+                on_off = "abiertos"; // The current time is within the opening and closing hours            
             }
         }
 
-        // Sustituir variables en la respuesta
+        // Replace variables in the response        
         const respuesta = faq.answer
             .replace('${hora_actual}', hora_actual)
             .replace('${on_off}', on_off)
@@ -110,7 +110,7 @@ const getFaqByQuestion = async (req, res) => {
         console.error('Error al procesar la solicitud:', error);
         return res.status(500).json({
             message: 'Error al procesar la solicitud.',
-            error: error.message || 'Error desconocido', // Mensaje de error significativo
+            error: error.message || 'Error desconocido', // Meaningful error message        
         });
     }
 };

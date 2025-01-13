@@ -25,61 +25,62 @@ const getOrderById = async (req, res) => {
 const createOrder = async (req, res) => {
     const { products: productData, customerName } = req.body;
 
-    // Validar el formato del JSON
+    // Validate JSON format    
     if (!customerName || !Array.isArray(productData) || productData.length === 0) {
         return res.status(400).json({ message: "El formato de los datos es incorrecto." });
     }
 
-    // Crear un mapa para contar las cantidades por ID
+    // Create a map to count quantities by ID    
     const productQuantityMap = {};
     for (const item of productData) {
         if (!item.id || !item.quantity || Number.isNaN(item.quantity)) {
             return res.status(400).json({ message: "Cada producto debe tener un id y una cantidad válida." });
         }
 
-        // Sumar las cantidades para IDs duplicados
+        // Sum quantities for duplicate IDs        
         const productId = item.id;
-        const quantity = parseInt(item.quantity); // Convertir a número
+        const quantity = parseInt(item.quantity); // Convert to number
 
         if (productQuantityMap[productId]) {
-            productQuantityMap[productId] += quantity; // Sumar cantidad
+            productQuantityMap[productId] += quantity; // Add quantity
+            
         } else {
-            productQuantityMap[productId] = quantity; // Inicializar cantidad
+            productQuantityMap[productId] = quantity; // Initialize quantity            
         }
     }
 
     try {
-        // Extraer solo los IDs únicos de los productos
+        // Extract only unique product IDs        
         const productIds = Object.keys(productQuantityMap);
 
-        // Buscar los productos en la base de datos
+        // Find products in the database        
         const products = await Product.find({ _id: { $in: productIds } });
 
         if (products.length !== productIds.length) {
             return res.status(404).json({ message: "Uno o más productos no existen." });
         }
 
-        // Crear la lista de productos con cantidades sumadas
+        // Create the list of products with summed quantities        
         const orderProducts = products.map((product) => ({
             product: product._id,
             name: product.name,
             price: product.price,
-            quantity: productQuantityMap[product._id.toString()], // Usar la cantidad total sumada
+            quantity: productQuantityMap[product._id.toString()],  // Use the total summed quantity                     
         }));
 
-        // Calcular el precio total de la orden
+        // Calculate the total price of the order        
         const total = orderProducts.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
-        // Crear la nueva orden
+        // Create new order        
         const order = new Order({
             products: orderProducts,
             customerName,
             total,
-            status: "pending", // Estado inicial
+            status: "pending", // Initial Status
             createdAt: new Date(),
         });
 
-        // Guardar la orden en la base de datos
+        // Save the order in the database        
         const newOrder = await order.save();
 
         // Perform update on status to cancelled after 30 minutes if bill is not paid
@@ -109,23 +110,23 @@ const updateOrder = async (req, res) => {
     }
 
     try {
-        // Extraer solo los IDs de los productos
+        // Extract only product IDs        
         const productIds = productData.map((item) => item.id);
 
-        // Buscar los productos en la base de datos
+        // Find products in the database        
         const products = await Product.find({ _id: { $in: productIds } });
 
         if (products.length !== productData.length) {
             return res.status(404).json({ message: "Uno o más productos no existen." });
         }
 
-        // Crear un mapa para relacionar ID con cantidad
+        // Create a map to relate ID with quantity        
         const productQuantityMap = productData.reduce((map, item) => {
             map[item.id] = item.quantity;
             return map;
         }, {});
 
-        // Crear la lista de productos con cantidades
+        // Create the list of products with quantities        
         const orderProducts = products.map((product) => ({
             product: product._id,
             name: product.name,
@@ -133,13 +134,13 @@ const updateOrder = async (req, res) => {
             quantity: productQuantityMap[product._id.toString()],
         }));
 
-        // Calcular el precio total de la orden
+        // Calculate the total price of the order        
         const total = orderProducts.reduce((sum, item) => {
             const product = products.find((p) => p._id.toString() === item.product.toString());
             return sum + product.price * item.quantity;
         }, 0);
 
-        // Actualizar la orden
+        // Update the order        
         const order = await Order.findByIdAndUpdate(
             req.params.id,
             {

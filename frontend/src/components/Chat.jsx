@@ -2,7 +2,7 @@ import React, { useEffect, useState, useRef } from 'react';
 import { Container, Divider, Card, Icon, Form, Button, Message, Segment, Label } from 'semantic-ui-react';
 import ChatBot from '../components/ChatBot.jsx';
 import ScrollToBottom from 'react-scroll-to-bottom';
-import './Chat.css'; // Archivo CSS adicional
+import './Chat.css'; // Additional CSS file
 
 const Chat = ({ socket, userName, room, userCount }) => {
     const [currentMessage, setCurrentMessage] = useState('');
@@ -22,19 +22,19 @@ const Chat = ({ socket, userName, room, userCount }) => {
             setCurrentMessage('');
         }
     };
-    // agregar mensajes al estado
+    // add messages to state
     const addMessageToList = (messageData) => {
         setMessageList((list) => [...list, messageData]);
     };
 
     useEffect(() => {
-        // Asegúrate de que este código esté siendo ejecutado
+        // Make sure this code is being executed
         socket.on('receive_message', (message) => {
         console.log('Mensaje recibido:', message);
         });
 
         return () => {
-            socket.off('receive_message'); // Limpiar el evento al desmontar
+            socket.off('receive_message'); // Clean up event when unmounting
         };
     }, [socket]);   
 
