@@ -21,7 +21,7 @@ Manejo robusto de errores.
 Tres semanas.
 
 5. Entregables:
-Repositorio de GitHub con el código fuente.
+Repositorio de GitHub con el código fuente: https://github.com/ramonserranoprofile/Sushi-Bot
 Documentación de cómo ejecutar el proyecto. (README.md) y Documento .doc (https://docs.google.com/document/d/1lGrd1W0_PIgx2TbD3wmdn92UnoBYOpi5wItdQTWuRZ0/edit?usp=sharing) con el detalle de documentación de los endpoints , lóogica de la App, 
 
 # Sushi Bot
@@ -103,6 +103,17 @@ git push origin main
 ```bash
 git clone https://github.com/ramonserranoprofile/Sushi-Bot.git
 ```
+8. Cómo cargar los datos iniciales
+En el folder /backend   (para cargar datos de productos a MonmgoDB) 
+```bash
+npm updateDb
+```
+  y para cargar datos de productos a MonmgoDB
+
+```bash
+npm updateFaqs
+```
+
 
 ---
 
