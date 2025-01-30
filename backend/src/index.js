@@ -1,12 +1,18 @@
 import app from './app.js';
-import dotenv from 'dotenv';
 import http from 'http';
+import fs from 'fs';
 import { Server } from 'socket.io';
+import { port, clientUrl } from './config/environment.js';
 
-dotenv.config();
-const port = process.env.PORT_EXPRESS || 3000;
 
-let server = http.createServer(app);
+const options = {
+    key: fs.readFileSync('./private.key'), // .key es para localhost cambiar para el dominio en producción
+    cert: fs.readFileSync('./certificate.crt') // .crt es para localhost, cambiar para el dominio en produccion
+};
+
+let server = http.createServer(options, app);
+//let server = https.createServer(options, app);
+
 server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
@@ -15,7 +21,7 @@ let connectedUsers = 0;
 
 export const io = new Server(server, {
     cors: {
-        origin: process.env.CLIENT_URL,
+        origin: clientUrl,
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
     },
 });

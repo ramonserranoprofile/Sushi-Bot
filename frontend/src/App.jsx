@@ -4,7 +4,9 @@ import { Container, Card, Icon, Form, Button, Header, Divider } from 'semantic-u
 import Chat from './components/Chat.jsx';
 
 
-const socket = io(import.meta.env.VITE_SERVER_HOST);
+const socket = io(import.meta.env.VITE_SERVER_HOST, {
+  rejectUnauthorized: false //Solo para desarrollo; usar en producción
+});
 
 
 function App() {

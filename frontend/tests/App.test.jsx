@@ -12,7 +12,12 @@ let ioInstance;
  */
 beforeAll(() => {
     // Crear servidor HTTP
-    httpServer = http.createServer();
+    const options = {
+        key: fs.readFileSync('./private.key'), // .key es para localhost cambiar para el dominio en producción
+        cert: fs.readFileSync('./certificate.crt') // .crt es para localhost, cambiar para el dominio en produccion
+    };
+    httpServer = http.createServer(options)
+    
     ioInstance = new Server(httpServer);
 
     // Start server on a dynamic port    
@@ -36,7 +41,7 @@ afterAll(() => {
  */
 beforeEach(() => {
     const { port } = httpServer.address();
-    socket = io(`http://localhost:${port}`, {
+    socket = io(`${import.meta.env.VITE_BASE_URL}:${port}`, {
         transports: ['websocket'],
         forceNew: true,
         reconnectionDelay: 0,

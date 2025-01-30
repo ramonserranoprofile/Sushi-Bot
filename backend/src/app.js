@@ -1,14 +1,14 @@
 // Import the required modules
 import express from 'express';
 import cookieParser from 'cookie-parser';
-import connectDB from '../database/mongoDB.js';
+import connectDB from './shared/database/mongoDB.js';
 import dotenv from 'dotenv';
-import menuRoutes from './routes/menuRoutes.js';
-import orderRoutes from './routes/orderRoutes.js';
-import faqRoutes from './routes/faqRoutes.js';
+import faqRoutes  from './modules/faq/faq.routes.js';
+import menuRoutes from './modules/menu/menu.routes.js';
+import orderRoutes from './modules/order/order.routes.js';
 import cors from 'cors';
+import csurf from '@dr.pogodin/csurf';
 import helmet from 'helmet';
-//import csurf from 'csurf';
 
 
 // Load the environment variables from the .env file
@@ -19,20 +19,59 @@ dotenv.config();
 
 const app = express();
 
+// const csrfProtection = csurf({ cookie: true });
+// app.use(csrfProtection)
+ // aplicar estrategia de proteccion con cross site request forgery
+// app.use((req, res, next) => {
+//     res.locals.csrfToken = req.csrfToken();
+//     next();
+// });
+// app.use((req, res, next) => {
+//     res.setHeader('X-Frame-Options', 'SAMEORIGIN');
+//     next();
+// });
+// app.use((req, res, next) => {
+//     res.setHeader('X-Content-Type-Options', 'nosniff');
+//     next();
+// });
+// app.use((req, res, next) => {
+//     res.setHeader('X-XSS-Protection', '1; mode=block');
+//     next();
+// });
+// app.use((req, res, next) => {
+//     res.setHeader('Content-Security-Policy', "default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'self' 'unsafe-inline'; img-src 'self'; font-src 'self'; connect-src 'self'; frame-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'; upgrade-insecure-requests");
+//     next();
+// });
+// app.use((req, res, next) => {
+//     res.setHeader('Referrer-Policy', 'no-referrer');
+//     next();
+// });
+// app.use((req, res, next) => {
+//     res.setHeader('Strict-Transport-Security', 'max-age=31536000; includeSubDomains; preload');
+//     next();
+// });
+
+
 // Config CORS
 const corsOptions = {
     origin: process.env.SERVER_HOST,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
-    allowedHeaders: ['Content-Type', 'Authorization']
+    allowedHeaders: ['Content-Type', 'Authorization'],
 };
 
 app.use(cors(corsOptions));
 
 // Use Helmet to protect against well-known vulnerabilities
 app.use(helmet());
+app.use(
+    helmet.contentSecurityPolicy({
+        directives: {
+            "script-src": ["'self'", "'unsafe-eval'"]
+        }
+    })
+);
+app.use(helmet.frameguard({ action: 'sameorigin' }));
 
-// CSRF protection
-//app.use(csurf({ cookie: true }));
 
 // Disable X-Powered-By header
 app.disable('x-powered-by');
@@ -53,6 +92,14 @@ app.use(cookieParser());
 app.get('/', (req, res) => {
     // Send a simple message as the response
     res.send('Hello World');
+});
+
+// Manejo de errores de CSRF
+app.use((err, req, res, next) => {
+    if (err.code === 'EBADCSRFTOKEN') {
+        return res.status(403).send('Token CSRF inválido.');
+    }
+    next(err);
 });
 
 // Routes

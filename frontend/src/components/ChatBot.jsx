@@ -68,7 +68,7 @@ const ChatBot = ({ socket, room, userName, botName = "SushiBot", addMessageToLis
     // Functions fetchMenu, fetchFAQ, handleFaq, handleOrderFlow, handleCommand below without changes
     const fetchMenu = async (returnAsString = true) => {
         try {
-            const response = await axios.get("http://localhost:3000/menu/", {
+            const response = await axios.get(`${import.meta.env.VITE_SERVER_HOST}/menu/`, {
                 headers: {
                     'Content-Type': 'application/json',
                 },
@@ -95,7 +95,7 @@ const ChatBot = ({ socket, room, userName, botName = "SushiBot", addMessageToLis
 
     const fetchFAQ = async (question) => {
         try {
-            const response = await axios.get(`http://localhost:3000/faq/${question}`);
+            const response = await axios.get(`${import.meta.env.VITE_SERVER_HOST}/faq/${question}`);
             return response.data.answer || "No encontré información sobre tu pregunta.";
         } catch (error) {
             console.error("Error al obtener la FAQ:", error);
@@ -133,7 +133,7 @@ const ChatBot = ({ socket, room, userName, botName = "SushiBot", addMessageToLis
             console.log("orderData antes del POST:", orderData);
 
             try {
-                const response = await axios.post('http://localhost:3000/order', orderData, {
+                const response = await axios.post(`${import.meta.env.VITE_SERVER_HOST}/order`, orderData, {
                     headers: {
                         'Content-Type': 'application/json',
                     },
