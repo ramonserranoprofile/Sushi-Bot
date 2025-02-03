@@ -9,13 +9,15 @@ const ChatBot = ({ socket, room, userName, botName = "SushiBot", addMessageToLis
         products: [],
     });
 
-    const welcomeSentRef = useRef(false); // Reference instead State
+    const welcomeSentRef = useRef(false);
 
+    
     useEffect(() => {
         if (!socket) {
             console.error("Socket no está definido en ChatBot");
             return;
         }
+
         const handleMessagle = async (data) => {
             if (data.room === room && data.author !== 'SushiBot') {
                 let botResponse = "";
@@ -25,7 +27,9 @@ const ChatBot = ({ socket, room, userName, botName = "SushiBot", addMessageToLis
                 } else if (currentFlow === "faq") {
                     botResponse = await handleFaq(data.message);
                 } else {
+                    // Usar el backend para manejar otros mensajes
                     botResponse = await handleCommand(data.message);
+
                 }
 
                 if (botResponse) {
@@ -64,8 +68,56 @@ const ChatBot = ({ socket, room, userName, botName = "SushiBot", addMessageToLis
             socket.off("receive_message", handleMessagle);
         };
     }, [socket, room, botName, currentFlow, addMessageToList]);
+    
+    // Functions sendMessageToAI, fetchMenu, fetchFAQ, handleFaq, handleOrderFlow, handleCommand below without changes
+    
+    const sendMessageToAI = async (message) => {
+        try {
+            // Validar entradas
+            if (!message || !socket.id || !userName) {
+                throw new Error("Datos incompletos: message, sessionId o userId no están definidos.");
+            }
 
-    // Functions fetchMenu, fetchFAQ, handleFaq, handleOrderFlow, handleCommand below without changes
+            // Enviar solicitud al backend
+            const response = await axios.post(
+                `${import.meta.env.VITE_SERVER_HOST}/chat/ai`, // URL del endpoint
+                {   
+                    message,
+                    sessionId: socket.id,
+                    userId: userName,
+                    userName: userName,
+                },
+                {
+                    headers: {
+                        'Content-Type': 'application/json', // Cabeceras correctamente ubicadas
+                    },
+                }
+            );
+            if (response.status !== 200) {
+                throw new Error("Respuesta del backend no válida.");
+            }
+            // Devolver la respuesta del backend
+            return response.data.response;
+        } catch (error) {
+            console.error("Error al enviar mensaje al backend:", error);
+
+            // Mostrar un mensaje de error más detallado
+            if (error.response) {
+                // El servidor respondió con un código de estado fuera del rango 2xx
+                console.error("Respuesta del servidor:", error.response.data);
+                console.error("Código de estado:", error.response.status);
+            } else if (error.request) {
+                // La solicitud fue hecha pero no se recibió respuesta
+                console.error("No se recibió respuesta del servidor:", error.request);
+            } else {
+                // Algo más causó el error
+                console.error("Error:", error.message);
+            }
+
+            return "Hubo un error al procesar tu mensaje. Inténtalo de nuevo.";
+        }
+    };
+    
     const fetchMenu = async (returnAsString = true) => {
         try {
             const response = await axios.get(`${import.meta.env.VITE_SERVER_HOST}/menu/`, {
@@ -221,6 +273,9 @@ const ChatBot = ({ socket, room, userName, botName = "SushiBot", addMessageToLis
         } else if (command === "3") {
             setCurrentFlow("faq");
             return "Por favor, escribe tu pregunta. Tembién puedes escribir 'Volver' para salir al Menú principal";
+        } else if (command != '1' && command != '2' && command != '3') {
+            const responseback = await sendMessageToAI(command);
+            return responseback;
         } else {
             return `Hola, Soy ${botName}, Bienvenido. Por favor, selecciona entre las opciones: \n1. Consultar Menú, \n2. Hacer un Pedido ó \n3. Hacer Preguntas Frecuentes (FAQ).`;
         }
@@ -231,5 +286,5 @@ const ChatBot = ({ socket, room, userName, botName = "SushiBot", addMessageToLis
         </div>
     );
 };
-
+    
 export default ChatBot;

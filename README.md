@@ -60,7 +60,7 @@ npm install --save-dev nodemon
 ```
 4.- Crear archivos app.js e index.js
 5.- Crear un servidor Express
-6.- Levantar el servidor en el puerto 3000
+6.- Levantar el servidor en el puerto 3001
 ```bash
 node start
 ```

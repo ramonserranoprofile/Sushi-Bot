@@ -3,9 +3,10 @@ import express from 'express';
 import cookieParser from 'cookie-parser';
 import connectDB from './shared/database/mongoDB.js';
 import dotenv from 'dotenv';
-import faqRoutes  from './modules/faq/faq.routes.js';
-import menuRoutes from './modules/menu/menu.routes.js';
-import orderRoutes from './modules/order/order.routes.js';
+import faqRouter from './modules/faq/faq.routes.js';
+import menuRouter from './modules/menu/menu.routes.js';
+import orderRouter from './modules/order/order.routes.js';
+import chatRouter  from './modules/chat/chat.routes.js';
 import cors from 'cors';
 import csurf from '@dr.pogodin/csurf';
 import helmet from 'helmet';
@@ -54,7 +55,7 @@ const app = express();
 
 // Config CORS
 const corsOptions = {
-    origin: process.env.SERVER_HOST,
+    origin: process.env.CLIENT_URL,
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     allowedHeaders: ['Content-Type', 'Authorization'],
 };
@@ -80,7 +81,7 @@ app.disable('x-powered-by');
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', '*');
     res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
-    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization', );
     next();
 });
 
@@ -103,9 +104,10 @@ app.use((err, req, res, next) => {
 });
 
 // Routes
-app.use('/menu', menuRoutes);
-app.use('/order', orderRoutes);
-app.use('/faq', faqRoutes);
+app.use('/menu', menuRouter);
+app.use('/order', orderRouter);
+app.use('/faq', faqRouter);
+app.use('/chat', chatRouter);
 
 // MongoDB Connection
 connectDB();

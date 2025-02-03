@@ -4,7 +4,6 @@ import fs from 'fs';
 import { Server } from 'socket.io';
 import { port, clientUrl } from './config/environment.js';
 
-
 const options = {
     key: fs.readFileSync('./private.key'), // .key es para localhost cambiar para el dominio en producción
     cert: fs.readFileSync('./certificate.crt') // .crt es para localhost, cambiar para el dominio en produccion
@@ -12,7 +11,6 @@ const options = {
 
 let server = http.createServer(options, app);
 //let server = https.createServer(options, app);
-
 server.listen(port, () => {
     console.log(`Server is running on port ${port}`);
 });
@@ -33,9 +31,14 @@ io.on('connection', (socket) => {
     io.emit('usersCount', connectedUsers);
 
     // Event to join a room    
-    socket.on('join_room', (room) => {
-        const socketJoin = socket.join(room);
-        console.log(`User with ID: ${socket.id} joined room: ${room}`);        
+    socket.on('join_room', (room, userId) => {
+        socket.join(room);
+        console.log(`User with ID: ${socket.id} joined room: ${room}`);
+        socket.sessionId = socket.id; // Usar socket.id como sessionId
+        socket.userId = userId; // Guardar userId en el socket
+        socket.room = room; // Guardar la sala en el socket
+        socket.to(room).emit('user_connected', userId); // 
+        console.log('Connected users:', connectedUsers); // 
     });
 
     // Message handling    

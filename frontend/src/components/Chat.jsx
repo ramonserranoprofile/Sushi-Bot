@@ -7,7 +7,6 @@ import './Chat.css'; // Additional CSS file
 const Chat = ({ socket, userName, room, userCount }) => {
     const [currentMessage, setCurrentMessage] = useState('');
     const [messageList, setMessageList] = useState([]);
-    
 
     const sendMessage = async () => {
         if (userName && currentMessage !== '') {
@@ -28,18 +27,22 @@ const Chat = ({ socket, userName, room, userCount }) => {
     };
 
     useEffect(() => {
-        // Make sure this code is being executed
+        socket.emit('join_room', room, userName);
+        
+                
+        // Manejar mensajes recibidos
         socket.on('receive_message', (message) => {
         console.log('Mensaje recibido:', message);
+            //addMessageToList(message);
         });
 
         return () => {
-            socket.off('receive_message'); // Clean up event when unmounting
+            socket.off('receive_message'); // Limpiar evento al desmontar
         };
-    }, [socket]);   
-
+    }, [socket, room, userName]);
+// ,room, userName
     const buttonRef = useRef(null);
-    
+
     return (
         <>            
             <Container style={{ marginTop: '2rem' }}>
