@@ -10,9 +10,9 @@ export class Email_Tool extends Tool {
     constructor() {
         super();
 
-        console.log("IONOS_USER:", process.env.IONOS_USER);
-        console.log("IONOS_PASS:", process.env.IONOS_PASS);
-        console.log("OPENAI_API_KEY:", process.env.OPENAI_API_KEY);
+        //console.log("IONOS_USER:", process.env.IONOS_USER);
+        //console.log("IONOS_PASS:", process.env.IONOS_PASS);
+        //console.log("OPENAI_API_KEY:", process.env.OPENAI_API_KEY);
 
         if (!process.env.IONOS_USER || !process.env.IONOS_PASS) {
             throw new Error("❌ Error: Credenciales de correo no proporcionadas. Verifica tu .env");
