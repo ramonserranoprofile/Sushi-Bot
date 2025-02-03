@@ -1,5 +1,5 @@
 
-Este proyecto está basado en el stack MERN (MongoDB, Express.js, React, Node.js) y requiere funcionalidades para un chatbot que tome pedidos de sushi, responda preguntas frecuentes y gestione pedidos.
+Este proyecto está basado en el stack MERN (MongoDB, Express.js, React, Node.js) y requiere funcionalidades para un chatbot que tome pedidos de sushi, responda preguntas frecuentes y gestione pedidos. Las últimas actualizaciones al proyecto son la incorporación de un Agente IA con memoria a largo plazo (LSTM) para mejorar la experiencia del usuario y la eficiencia del chatbot, y que tome acciones como enviar emails customizados y mejorados por IA, crear files con contenido deseado, abrir aplicaciopnes, gestionar meetings, calendar, etc.
 
 1. Planificación del proyecto
 Requisitos clave:
