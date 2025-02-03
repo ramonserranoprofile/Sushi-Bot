@@ -50,6 +50,7 @@ coverage/
 dist/
 build/
 .DS_Store
+*.key
 *.log
 logs/
 tmp/
