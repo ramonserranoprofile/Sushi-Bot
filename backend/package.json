@@ -18,7 +18,7 @@
         "@langchain/community": "^0.3.28",
         "@langchain/core": "^0.3.37",
         "@langchain/langgraph": "^0.2.44",
-        "@langchain/openai": "^0.4.2",
+        "@langchain/openai": "^0.4.4",
         "axios": "^1.7.9",
         "child_process": "^1.0.2",
         "cookie-parser": "^1.4.7",
