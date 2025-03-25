@@ -12,7 +12,7 @@
   },
   "dependencies": {
     "@rcb-plugins/input-validator": "^0.1.1",
-    "axios": "^1.7.9",
+    "axios": "^1.8.3",
     "dotenv": "^16.4.7",
     "frontend": "file:",
     "react": "^18.3.1",
