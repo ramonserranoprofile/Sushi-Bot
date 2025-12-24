@@ -16,7 +16,7 @@
     "dependencies": {
         "@dr.pogodin/csurf": "^1.14.1",
         "@langchain/community": "^0.3.28",
-        "@langchain/core": "^0.3.37",
+        "@langchain/core": "^0.3.80",
         "@langchain/langgraph": "^0.2.44",
         "@langchain/openai": "^0.4.2",
         "axios": "^1.7.9",
